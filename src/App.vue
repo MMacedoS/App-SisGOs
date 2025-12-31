@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import TheHeader from "./components/Header/Header.vue";
+import Footer from "./components/footer/footer.vue";
+import Header from "./components/header/Header.vue";
 </script>
 
 <template>
-  <TheHeader />
+  <Header />
+  <Footer />
 </template>
 
 <style scoped>
