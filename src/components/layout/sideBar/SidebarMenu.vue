@@ -3,13 +3,17 @@ import { Apple, Home, Settings, ShoppingBasket, Users } from "lucide-vue-next";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/composables/useAuth";
+import NavUser from "./NavUser.vue";
 
 // Menu items.
 const items = [
@@ -33,12 +37,9 @@ const items = [
     url: "/sales",
     icon: ShoppingBasket,
   },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
 ];
+
+const { user } = useAuth();
 </script>
 
 <template>
@@ -62,5 +63,9 @@ const items = [
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
+    <SidebarFooter>
+      <NavUser />
+    </SidebarFooter>
+    <SidebarRail />
   </Sidebar>
 </template>

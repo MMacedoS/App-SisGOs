@@ -1,3 +1,4 @@
+import { environment } from "@/environment";
 import { useAuthStore } from "@/stores/auth";
 import { computed } from "vue";
 import type { Router } from "vue-router";
@@ -11,11 +12,14 @@ export const useAuth = () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        `${environment.VITE_URL_API}:${environment.VITE_PORT}${environment.VITE_PREFIX_API}/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Credenciais inválidas");
@@ -33,10 +37,29 @@ export const useAuth = () => {
     }
   };
 
-  const logout = (router?: Router) => {
-    authStore.logout();
-    if (router) {
-      router.push("/login");
+  const logout = async (router?: Router) => {
+    try {
+      const response = await fetch(
+        `${environment.VITE_URL_API}:${environment.VITE_PORT}${environment.VITE_PREFIX_API}/logout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.value}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("authorização inválida");
+      }
+
+      authStore.logout();
+      if (router) {
+        router.push("/login");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
     }
   };
 

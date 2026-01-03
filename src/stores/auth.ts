@@ -14,12 +14,19 @@ export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = computed(() => !!token.value);
 
   const loadFromStorage = () => {
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
+    try {
+      const storedUser = localStorage.getItem("user");
+      const storedToken = localStorage.getItem("token");
 
-    if (storedUser && storedToken) {
-      user.value = JSON.parse(storedUser);
-      token.value = storedToken;
+      if (storedUser && storedToken) {
+        user.value = JSON.parse(storedUser);
+        token.value = storedToken;
+      }
+    } catch (error) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      user.value = null;
+      token.value = null;
     }
   };
 

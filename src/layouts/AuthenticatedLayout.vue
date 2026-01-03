@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import SidebarMenu from "../layout/sideBar/SidebarMenu.vue";
-import SidebarProvider from "../ui/sidebar/SidebarProvider.vue";
-import SidebarTrigger from "../ui/sidebar/SidebarTrigger.vue";
-import SidebarInset from "../ui/sidebar/SidebarInset.vue";
+import SidebarMenu from "@/components/layout/sideBar/SidebarMenu.vue";
+import SidebarProvider from "@/components/ui/sidebar/SidebarProvider.vue";
+import SidebarTrigger from "@/components/ui/sidebar/SidebarTrigger.vue";
+import SidebarInset from "@/components/ui/sidebar/SidebarInset.vue";
 </script>
+
 <template>
   <SidebarProvider>
     <SidebarMenu />

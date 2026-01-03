@@ -7,49 +7,49 @@ import Customer from "@/pages/customers/Customer.vue";
 import Sale from "@/pages/sales/Sale.vue";
 import ServiceOrder from "@/pages/service-orders/ServiceOrder.vue";
 import Login from "@/pages/login/Login.vue";
+import Register from "@/pages/register/Register.vue";
+import { useAuth } from "@/composables/useAuth";
 
 const routes = [
   {
     path: "/",
     name: "Dashboard",
     component: Dashboard,
-    meta: { requiresAuth: true },
   },
   {
     path: "/users",
     name: "Users",
     component: Users,
-    meta: { requiresAuth: true },
   },
   {
     path: "/products",
     name: "Products",
     component: Product,
-    meta: { requiresAuth: true },
   },
   {
     path: "/customers",
     name: "Customers",
     component: Customer,
-    meta: { requiresAuth: true },
   },
   {
     path: "/sales",
     name: "Sales",
     component: Sale,
-    meta: { requiresAuth: true },
   },
   {
     path: "/service-orders",
     name: "ServiceOrders",
     component: ServiceOrder,
-    meta: { requiresAuth: true },
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
-    meta: { requiresAuth: false },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
 ];
 
@@ -60,15 +60,17 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
-  const requiresAuth = to.meta.requiresAuth;
+  const requiresAuth = to.name !== "Login" && to.name !== "Register";
 
   if (requiresAuth && !authStore.isAuthenticated) {
-    next({ name: "Login" });
-  } else if (to.name === "Login" && authStore.isAuthenticated) {
-    next({ name: "Dashboard" });
-  } else {
-    next();
+    return next({ name: "Login" });
   }
+
+  if (to.name === "Login" && authStore.isAuthenticated) {
+    return next({ name: "Dashboard" });
+  }
+
+  next();
 });
 
 export default router;
