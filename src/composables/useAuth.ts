@@ -41,7 +41,7 @@ export const useAuth = () => {
   };
 
   const updateUserData = (userData: Partial<typeof authStore.user>) => {
-    authStore.updateUser(userData);
+    authStore.updateUser(userData ?? {});
   };
 
   return {
