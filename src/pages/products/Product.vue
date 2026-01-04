@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <Card class="w-full h-full m-0 p-4 mb-10" v-if="!isLoading">
+  <Card class="w-full h-full m-0 p-4 mb-15 lg:mb-20" v-if="!isLoading">
     <CardDescription
       class="text-xl font-bold mb-5 flex gap-2 justify-between items-center"
     >

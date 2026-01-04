@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Apple, Home, Settings, ShoppingBasket, Users } from "lucide-vue-next";
+import { Apple, Home, Server, ShoppingBasket, Users } from "lucide-vue-next";
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +12,6 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/composables/useAuth";
 import NavUser from "./NavUser.vue";
 
 // Menu items.
@@ -37,9 +36,12 @@ const items = [
     url: "/sales",
     icon: ShoppingBasket,
   },
+  {
+    title: "Services",
+    url: "/services",
+    icon: Server,
+  },
 ];
-
-const { user } = useAuth();
 </script>
 
 <template>

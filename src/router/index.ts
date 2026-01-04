@@ -8,7 +8,7 @@ import Sale from "@/pages/sales/Sale.vue";
 import ServiceOrder from "@/pages/service-orders/ServiceOrder.vue";
 import Login from "@/pages/login/Login.vue";
 import Register from "@/pages/register/Register.vue";
-import { useAuth } from "@/composables/useAuth";
+import Service from "@/pages/services/Service.vue";
 
 const routes = [
   {
@@ -35,6 +35,11 @@ const routes = [
     path: "/sales",
     name: "Sales",
     component: Sale,
+  },
+  {
+    path: "/services",
+    name: "Services",
+    component: Service,
   },
   {
     path: "/service-orders",
