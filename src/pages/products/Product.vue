@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <Card class="w-full h-full m-0 p-4" v-if="!isLoading">
+  <Card class="w-full h-full m-0 p-4 mb-10" v-if="!isLoading">
     <CardDescription
       class="text-xl font-bold mb-5 flex gap-2 justify-between items-center"
     >
@@ -187,7 +187,7 @@ import DialogHeader from "@/components/ui/dialog/DialogHeader.vue";
 import DialogTitle from "@/components/ui/dialog/DialogTitle.vue";
 import DialogTrigger from "@/components/ui/dialog/DialogTrigger.vue";
 import ProductForm from "./ProductForm.vue";
-import { CirclePlus, Edit2, Trash2 } from "lucide-vue-next";
+import { CirclePlus, Edit2 } from "lucide-vue-next";
 import { useProducts } from "@/composables/products/useProducts";
 import type { Product } from "@/types/product";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -1,6 +1,6 @@
 <template>
   <div class="text-1xl font-bold mb-5">Dashboard Page</div>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-15">
     <Card
       @click="redirect('/products')"
       class="cursor-pointer bg-blue-600 hover:bg-blue-500 transition"
