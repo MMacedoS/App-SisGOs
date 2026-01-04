@@ -27,21 +27,35 @@
           {{ totalItems === 1 ? "produto cadastrado" : "produtos cadastrados" }}
         </p>
       </div>
-      <Dialog>
+      <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-          <Button class="bg-blue-600 hover:bg-blue-500 text-white" size="sm">
+          <Button
+            class="bg-blue-600 hover:bg-blue-500 text-white"
+            size="sm"
+            @click="openCreateDialog"
+          >
             <CirclePlus class="mr-2 h-4 w-4" />
             Novo Produto
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Novo Produto</DialogTitle>
+            <DialogTitle>{{
+              editingProduct ? "Editar Produto" : "Novo Produto"
+            }}</DialogTitle>
             <DialogDescription>
-              Preencha os dados do produto abaixo
+              {{
+                editingProduct
+                  ? "Atualize os dados do produto"
+                  : "Preencha os dados do produto abaixo"
+              }}
             </DialogDescription>
           </DialogHeader>
-          <ProductForm @submit="handleProductSubmit" @cancel="closeDialog" />
+          <ProductForm
+            :initial-data="editingProduct"
+            @submit="handleProductSubmit"
+            @cancel="closeDialog"
+          />
         </DialogContent>
       </Dialog>
     </CardDescription>
@@ -73,7 +87,7 @@
           <div class="flex items-start justify-between mb-3">
             <div class="flex items-center gap-3 flex-1 min-w-0">
               <div
-                class="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0"
+                class="h-12 w-12 rounded-full bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0"
               >
                 <span class="text-white font-bold text-lg">
                   {{ product.name.charAt(0).toUpperCase() }}
@@ -138,18 +152,12 @@
               variant="outline"
               class="flex-1 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300"
               size="sm"
+              @click="openEditDialog(product)"
             >
               <Edit2 class="mr-1 h-3 w-3" />
               Editar
             </Button>
-            <Button
-              variant="outline"
-              class="flex-1 hover:bg-red-50 hover:text-red-700 hover:border-red-300"
-              size="sm"
-            >
-              <Trash2 class="mr-1 h-3 w-3" />
-              Deletar
-            </Button>
+            <Delete @confirm="handleDeleteProduct(product.id)" />
           </div>
         </div>
       </div>
@@ -186,13 +194,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Separator from "@/components/ui/separator/Separator.vue";
 import Pagination from "@/shared/Pagination.vue";
 import Button from "@/components/ui/button/Button.vue";
+import Delete from "@/shared/Delete.vue";
 
-const { fetchProducts, postProducts } = useProducts();
+const { fetchProducts, postProducts, putProducts, deleteProducts } =
+  useProducts();
 const products = ref<Product[]>([]);
 const isLoading = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 const totalItems = ref(0);
+const isDialogOpen = ref(false);
+const editingProduct = ref<Product | null>(null);
 
 const loadProducts = async () => {
   isLoading.value = true;
@@ -218,14 +230,46 @@ const handlePageChange = (page: number) => {
 
 const handleProductSubmit = async (data: any) => {
   try {
+    if (editingProduct.value) {
+      const result = await putProducts(editingProduct.value.id, data);
+      console.log("Produto atualizado:", result);
+      closeDialog();
+      loadProducts();
+      return;
+    }
+
     const result = await postProducts(data);
     console.log("Produto criado:", result);
+    closeDialog();
     loadProducts();
   } catch (error) {
-    console.error("Erro ao criar produto:", error);
+    console.error("Erro ao salvar produto:", error);
   }
 };
 
-const closeDialog = () => {};
+const handleDeleteProduct = async (id: string) => {
+  try {
+    await deleteProducts(id);
+    console.log("Produto deletado:", id);
+    loadProducts();
+  } catch (error) {
+    console.error("Erro ao deletar produto:", error);
+  }
+};
+
+const openCreateDialog = () => {
+  editingProduct.value = null;
+  isDialogOpen.value = true;
+};
+
+const openEditDialog = (product: Product) => {
+  editingProduct.value = { ...product };
+  isDialogOpen.value = true;
+};
+
+const closeDialog = () => {
+  isDialogOpen.value = false;
+  editingProduct.value = null;
+};
 </script>
 <style lang=""></style>

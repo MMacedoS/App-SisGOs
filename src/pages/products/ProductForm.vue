@@ -91,6 +91,7 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import * as z from "zod";
+import { watch } from "vue";
 import Button from "@/components/ui/button/Button.vue";
 import Input from "@/components/ui/input/Input.vue";
 import {
@@ -105,6 +106,11 @@ import SelectValue from "@/components/ui/select/SelectValue.vue";
 import SelectContent from "@/components/ui/select/SelectContent.vue";
 import SelectItem from "@/components/ui/select/SelectItem.vue";
 import Select from "@/components/ui/select/Select.vue";
+import type { Product } from "@/types/product";
+
+const props = defineProps<{
+  initialData?: Product | null;
+}>();
 
 const emit = defineEmits<{
   submit: [
@@ -137,9 +143,27 @@ const formSchema = toTypedSchema(
   })
 );
 
-const { handleSubmit, resetForm } = useForm({
+const { handleSubmit, resetForm, setValues } = useForm({
   validationSchema: formSchema,
 });
+
+watch(
+  () => props.initialData,
+  (newData) => {
+    if (newData) {
+      setValues({
+        name: newData.name,
+        description: newData.description || "",
+        price: newData.price,
+        stock: newData.stock,
+        status: newData.status || "ativo",
+      });
+    } else {
+      resetForm();
+    }
+  },
+  { immediate: true }
+);
 
 const onSubmit = handleSubmit((values) => {
   emit("submit", values);

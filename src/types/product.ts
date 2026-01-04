@@ -5,6 +5,7 @@ interface Product {
   description: string;
   price: number;
   stock: number;
+  status: "ativo" | "inativo";
 }
 
 export type { Product };

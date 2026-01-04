@@ -39,8 +39,38 @@ export const useProducts = () => {
     return await response.json();
   };
 
+  const putProducts = async (id: string, productData: any) => {
+    const response = await fetch(
+      `${environment.VITE_URL_API}:${environment.VITE_PORT}${environment.VITE_PREFIX_API}/products/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.value}`,
+        },
+        body: JSON.stringify(productData),
+      }
+    );
+    return await response.json();
+  };
+
+  const deleteProducts = async (id: string) => {
+    const response = await fetch(
+      `${environment.VITE_URL_API}:${environment.VITE_PORT}${environment.VITE_PREFIX_API}/products/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      }
+    );
+    return await response.json();
+  };
+
   return {
     fetchProducts,
     postProducts,
+    putProducts,
+    deleteProducts,
   };
 };
