@@ -67,8 +67,8 @@
               <SelectValue placeholder="Selecione o status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="active">Ativo</SelectItem>
-              <SelectItem value="inactive">Inativo</SelectItem>
+              <SelectItem value="ativo">Ativo</SelectItem>
+              <SelectItem value="inativo">Inativo</SelectItem>
             </SelectContent>
           </Select>
         </FormControl>
@@ -113,7 +113,7 @@ const emit = defineEmits<{
       description?: string;
       price: number;
       stock: number;
-      status: "active" | "inactive";
+      status: "ativo" | "inativo";
     }
   ];
   cancel: [];
@@ -131,7 +131,7 @@ const formSchema = toTypedSchema(
     stock: z.coerce
       .number({ required_error: "Estoque é obrigatório" })
       .min(0, "Estoque não pode ser negativo"),
-    status: z.enum(["active", "inactive"], {
+    status: z.enum(["ativo", "inativo"], {
       required_error: "Status é obrigatório",
     }),
   })
