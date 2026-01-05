@@ -6,6 +6,7 @@ export interface Person {
   status: string | null;
   type_doc: string;
   doc: string;
+  gender?: string | null;
   birth_date: string | null;
   phone?: string | null;
   address?: string | null;

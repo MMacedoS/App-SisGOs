@@ -107,17 +107,21 @@
             <div class="shrink-0 ml-2">
               <span
                 class="relative flex h-3 w-3"
-                :title="customer.status ? 'Ativo' : 'Inativo'"
+                :title="customer.status === 'ativo' ? 'Ativo' : 'Inativo'"
               >
                 <span
                   class="absolute inline-flex h-full w-full rounded-full opacity-75"
                   :class="
-                    customer.status ? 'animate-ping bg-green-400' : 'bg-red-400'
+                    customer.status === 'ativo'
+                      ? 'animate-ping bg-green-400'
+                      : 'animate-ping  bg-red-400'
                   "
                 ></span>
                 <span
                   class="relative inline-flex rounded-full h-3 w-3"
-                  :class="customer.status ? 'bg-green-500' : 'bg-red-500'"
+                  :class="
+                    customer.status === 'ativo' ? 'bg-green-500' : 'bg-red-500'
+                  "
                 ></span>
               </span>
             </div>
@@ -181,7 +185,7 @@ import Skeleton from "@/components/ui/skeleton/Skeleton.vue";
 import { useCustomers } from "@/composables/customers/useCustomers";
 import Delete from "@/shared/Delete.vue";
 import type { Customer } from "@/types/customer";
-import { CirclePlus } from "lucide-vue-next";
+import { CirclePlus, Edit2 } from "lucide-vue-next";
 import { onMounted, ref } from "vue";
 import CustomerForm from "./CustomerForm.vue";
 import Pagination from "@/shared/Pagination.vue";

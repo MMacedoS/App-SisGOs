@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-vue-next";
+import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 import { useAuth } from "@/composables/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -45,10 +38,7 @@ const handleLogout = () => {
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <Avatar class="h-8 w-8 rounded-lg">
-              <AvatarImage
-                :src="'../../../../public/124599.jpeg'"
-                :alt="user?.name"
-              />
+              <AvatarImage :src="'/124599.jpeg'" :alt="user?.name" />
               <AvatarFallback class="rounded-lg"> CN </AvatarFallback>
             </Avatar>
             <div class="grid flex-1 text-left text-sm leading-tight">
@@ -67,10 +57,7 @@ const handleLogout = () => {
           <DropdownMenuLabel class="p-0 font-normal">
             <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar class="h-8 w-8 rounded-lg">
-                <AvatarImage
-                  :src="'../../../../public/124599.jpeg'"
-                  :alt="user?.name"
-                />
+                <AvatarImage :src="'/124599.jpeg'" :alt="user?.name" />
                 <AvatarFallback class="rounded-lg"> CN </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">

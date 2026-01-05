@@ -14,7 +14,7 @@
       </FormItem>
     </FormField>
 
-    <FormField v-slot="{ componentField }" name="description">
+    <FormField v-slot="{ componentField }" name="email">
       <FormItem>
         <FormLabel>E-mail</FormLabel>
         <FormControl>
@@ -156,6 +156,46 @@
         </FormItem>
       </FormField>
     </div>
+
+    <div class="grid grid-cols-2 gap-2">
+      <FormField v-slot="{ componentField }" name="status">
+        <FormItem>
+          <FormLabel>Status</FormLabel>
+          <FormControl>
+            <Select v-bind="componentField">
+              <SelectTrigger class="w-full">
+                <SelectValue placeholder="Selecione o status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ativo">Ativo</SelectItem>
+                <SelectItem value="inativo">Inativo</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <FormField v-slot="{ componentField }" name="gender">
+        <FormItem>
+          <FormLabel>Gênero</FormLabel>
+          <FormControl>
+            <Select v-bind="componentField">
+              <SelectTrigger class="w-full">
+                <SelectValue placeholder="Selecione o gênero" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="masculino">Masculino</SelectItem>
+                <SelectItem value="feminino">Feminino</SelectItem>
+                <SelectItem value="outro">Outro</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+    </div>
+
     <div class="flex justify-end gap-2">
       <Button type="button" variant="outline" @click="$emit('cancel')">
         Cancelar
@@ -227,6 +267,7 @@ const formSchema = toTypedSchema(
       status: z.enum(["ativo", "inativo"], {
         errorMap: () => ({ message: "O status é obrigatório" }),
       }),
+      gender: z.string().optional(),
     })
     .refine(
       (data) => {
@@ -245,6 +286,9 @@ const formSchema = toTypedSchema(
 const { handleSubmit, resetForm, setValues, values, setFieldValue } =
   useForm<CustomerRequest>({
     validationSchema: formSchema,
+    initialValues: {
+      status: "ativo",
+    },
   });
 
 const handleDocInput = (event: Event) => {
@@ -286,6 +330,7 @@ watch(
         zip_code: newData.person.zip_code || "",
         country: newData.person.country || "",
         status: newData.status,
+        gender: newData.person.gender || "",
       });
     } else {
       resetForm();
@@ -296,7 +341,7 @@ watch(
 
 const onSubmit = handleSubmit((values) => {
   emit("submit", values);
-  resetForm();
+  // resetForm();
 });
 </script>
 <style lang=""></style>

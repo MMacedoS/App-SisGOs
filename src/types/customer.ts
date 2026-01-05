@@ -29,4 +29,5 @@ export interface CustomerRequest {
   state?: string | null;
   zip_code?: string | null;
   country?: string | null;
+  gender?: string | null;
 }

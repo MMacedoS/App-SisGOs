@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sidebar";
 import NavUser from "./NavUser.vue";
 
-// Menu items.
 const items = [
   {
     title: "Home",
@@ -22,8 +21,8 @@ const items = [
     icon: Home,
   },
   {
-    title: "Users",
-    url: "/users",
+    title: "Customers",
+    url: "/customers",
     icon: Users,
   },
   {
